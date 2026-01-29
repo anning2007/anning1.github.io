@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI聊天助手 - 无限畅聊</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <!-- 侧边栏 -->
+        <div class="sidebar">
+            <div class="sidebar-header">
+                <h2><i class="fas fa-robot"></i> AI聊天助手</h2>
+                <button class="btn new-chat" id="newChat">
+                    <i class="fas fa-plus"></i> 新对话
+                </button>
+            </div>
+            
+            <!-- 用户资料区域 -->
+            <div class="user-profile">
+                <div class="avatar-container">
+                    <img src="https://api.dicebear.com/7.x/avataaars/svg?seed=User" alt="用户头像" class="avatar" id="userAvatar">
+                    <input type="file" id="avatarUpload" accept="image/*" style="display: none;">
+                    <button class="avatar-upload-btn" id="changeAvatar">
+                        <i class="fas fa-camera"></i>
+                    </button>
+                </div>
+                <h3 id="username">用户</h3>
+            </div>
+            
+            <!-- 性格设置 -->
+            <div class="personality-settings">
+                <h3><i class="fas fa-cog"></i> 性格设置</h3>
+                
+                <div class="setting-item">
+                    <label for="personalityType">预设性格:</label>
+                    <select id="personalityType">
+                        <option value="assistant">普通助手</option>
+                        <option value="friendly">友好伙伴</option>
+                        <option value="professional">专业顾问</option>
+                        <option value="humorous">幽默朋友</option>
+                        <option value="teacher">耐心导师</option>
+                        <option value="creative">创意伙伴</option>
+                        <option value="custom">自定义</option>
+                    </select>
+                </div>
+                
+                <div class="setting-item">
+                    <label for="temperature">创造力:</label>
+                    <input type="range" id="temperature" min="0" max="1" step="0.1" value="0.7">
+                    <span id="tempValue">0.7</span>
+                </div>
+                
+                <div class="setting-item">
+                    <label for="customPrompt">自定义性格描述:</label>
+                    <textarea id="customPrompt" placeholder="例如: 你是一位精通多种语言的翻译助手..."></textarea>
+                </div>
+                
+                <div class="setting-item">
+                    <label for="aiAvatar">AI头像:</label>
+                    <div class="avatar-selection">
+                        <div class="avatar-option selected" data-avatar="bot">
+                            <img src="https://api.dicebear.com/7.x/bottts/svg?seed=AI" alt="机器人">
+                        </div>
+                        <div class="avatar-option" data-avatar="human">
+                            <img src="https://api.dicebear.com/7.x/personas/svg?seed=AI" alt="人类">
+                        </div>
+                        <div class="avatar-option" data-avatar="cat">
+                            <img src="https://api.dicebear.com/7.x/shapes/svg?seed=AI" alt="猫咪">
+                        </div>
+                    </div>
+                </div>
+                
+                <button class="btn save-settings" id="saveSettings">
+                    <i class="fas fa-save"></i> 保存设置
+                </button>
+            </div>
+            
+            <!-- 历史对话 -->
+            <div class="chat-history">
+                <h3><i class="fas fa-history"></i> 历史对话</h3>
+                <div class="history-list" id="historyList">
+                    <!-- 历史对话将通过JS动态加载 -->
+                </div>
+            </div>
+        </div>
+        
+        <!-- 主聊天区域 -->
+        <div class="main-content">
+            <div class="chat-header">
+                <h1 id="chatTitle">AI聊天助手</h1>
+                <div class="chat-info">
+                    <span id="currentPersonality">性格: 普通助手</span>
+                    <span id="messageCount">消息: 0</span>
+                </div>
+            </div>
+            
+            <div class="chat-container" id="chatContainer">
+                <!-- 欢迎消息 -->
+                <div class="message ai-message">
+                    <img src="https://api.dicebear.com/7.x/bottts/svg?seed=AI" alt="AI头像" class="message-avatar">
+                    <div class="message-content">
+                        <div class="message-text">
+                            你好！我是AI助手，可以和我进行无限次聊天。请从左侧设置我的性格，然后开始对话吧！
+                        </div>
+                        <div class="message-time">现在</div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- 输入区域 -->
+            <div class="input-area">
+                <div class="input-container">
+                    <textarea id="messageInput" placeholder="输入消息... (Shift+Enter换行，Enter发送)" rows="1"></textarea>
+                    <div class="input-buttons">
+                        <button id="sendButton" class="btn send-btn">
+                            <i class="fas fa-paper-plane"></i> 发送
+                        </button>
+                        <button id="clearButton" class="btn clear-btn">
+                            <i class="fas fa-trash"></i> 清空
+                        </button>
+                    </div>
+                </div>
+                <div class="input-footer">
+                    <span>AI聊天助手 - 可无限次使用</span>
+                    <span id="typingIndicator" style="display:none;">
+                        <i class="fas fa-ellipsis-h"></i> AI正在思考...
+                    </span>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- 通知弹窗 -->
+    <div id="notification" class="notification"></div>
+    
+    <script src="script.js"></script>
+</body>
+</html>
